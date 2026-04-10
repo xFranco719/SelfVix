@@ -6,7 +6,7 @@ Addon leggero e standalone per Stremio che estrae e riproduce contenuti da VixSr
 - **Branding Personalizzato**: Nome `SelfVix🤌` e logo personalizzato.
 - **Proxy HLS Automatico**: Tutti i flussi passano attraverso il server dell'addon per bypassare restrizioni di IP e geolocalizzazione (ideale per Render/HuggingFace).
 - **Synthetic FHD**: Il proxy riscrive il manifest per servire solo la qualità video migliore (1080p), mantenendo tutte le tracce audio e i sottotitoli.
-- **Supporto Anime (Kitsu)**: Integrazione completa con **AnimeMapping** (`animemapping.stremio.dpdns.org`) per risolvere correttamente i Kitsu ID su AnimeUnity (VixCloud).
+- **Supporto Anime (Kitsu)**: Integrazione completa con le api di Kitsu
 - **ID Agnostico**: Funziona correttamente con ID TMDB (`786892`), IMDB (`tt30144839`) e Kitsu (`kitsu:12:1`).
 
 ## Naming degli Stream
@@ -17,18 +17,19 @@ Addon leggero e standalone per Stremio che estrae e riproduce contenuti da VixSr
 
 ## Istruzioni per il Deploy
 
-### 1. Deploy su Render (Scelta Consigliata)
-Render è la piattaforma più stabile per questo addon.
+### 1. Deploy su Koyeb (Scelta consigliata per stabilità)
+Koyeb è un'ottima alternativa a Render, più veloce e senza il "periodo di sospensione" (sleep) del piano gratuito.
 
-1.  Carica tutti i file di questa cartella (`vix-simple-addon-workspace`) su un nuovo repository privato/pubblico su GitHub.
-2.  Accedi a [Render](https://render.com/) e crea un nuovo **Web Service**.
-3.  Collega il repository GitHub.
+1.  Crea un account su [Koyeb.com](https://www.koyeb.com/).
+2.  Clicca su **"Create Service"** e seleziona **GitHub**.
+3.  Collega il tuo repository `SelfVix`.
 4.  Nelle impostazioni di configurazione:
-    -   **Runtime**: Scegli `Docker`.
-    -   **Dockerfile Path**: Inserisci `Dockerfile.render`. (Se hai rinominato il file in `Dockerfile`, lascialo predefinito).
-5.  Il deploy inizierà automaticamente. Una volta completato, l'addon sarà accessibile all'URL fornito da Render.
+    -   **Builder**: Assicurati che sia selezionato `Docker`.
+    -   **Dockerfile Path**: Inserisci `Dockerfile.render` (o il nome del file che hai usato).
+    -   **Port**: Imposta `7000`.
+5.  Clicca su **Deploy**. L'addon sarà online in pochi minuti.
 
-### 2. Deploy su Hugging Face Spaces (Gratuito)
+### 3. Deploy su Hugging Face Spaces (Gratuito)
 Ottimo come backup gratuito.
 
 1.  Crea un nuovo **Space** su [Hugging Face](https://huggingface.co/spaces).
@@ -37,6 +38,16 @@ Ottimo come backup gratuito.
 4.  **Importante**: Hugging Face cerca un file chiamato esattamente `Dockerfile`.
     -   Rinomina `Dockerfile.hf` in `Dockerfile` durante il caricamento o copia il suo contenuto in un nuovo file `Dockerfile` nella root dello Space.
 5.  Lo Space si avvierà automaticamente sulla porta `7860`.
+
+### 4. Deploy su Vercel (Velocissimo)
+Dato che il progetto include i file `vercel.json` e `api/index.ts`, puoi ospitarlo come Serverless Function.
+
+1.  Vai su [Vercel.com](https://vercel.com/) e importa il tuo repository GitHub.
+2.  Vercel rileverà automaticamente la configurazione.
+3.  Clicca su **Deploy**.
+4.  L'addon sarà accessibile su `https://tua-app.vercel.app/manifest.json`.
+
+*Nota: Vercel ha limiti di banda sul piano gratuito, usalo con cautela per lo streaming intenso.*
 
 ---
 
